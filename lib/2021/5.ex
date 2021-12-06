@@ -21,8 +21,8 @@ defmodule Y2021.D5 do
     do: Enum.reduce(y1..y2, grid, &mark_point({x, &1}, &2))
 
   defp mark_line([{x1, y1}, {x2, y2}], grid, :inc_diagonals) do
-    [Enum.map(x1..x2, & &1), Enum.map(y1..y2, & &1)]
-    |> Enum.zip()
+    x1..x2
+    |> Enum.zip(y1..y2)
     |> Enum.reduce(grid, &mark_point/2)
   end
 
