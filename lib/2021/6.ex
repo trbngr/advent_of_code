@@ -9,8 +9,7 @@ defmodule Y2021.D6 do
 
   defp run(input, days) do
     input
-    |> parse_input()
-    |> Enum.frequencies()
+    |> parse_fish()
     |> simulate(days)
     |> Map.values()
     |> Enum.sum()
@@ -33,10 +32,11 @@ defmodule Y2021.D6 do
     |> Map.update(6, spawn_count, &(&1 + spawn_count))
   end
 
-  defp parse_input(input) do
+  defp parse_fish(input) do
     input
     |> String.trim()
     |> String.split(",", trim: true)
     |> Enum.map(&String.to_integer/1)
+    |> Enum.frequencies()
   end
 end
