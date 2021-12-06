@@ -11,17 +11,17 @@ defmodule Y2021.D6 do
     input
     |> parse_input()
     |> Enum.frequencies()
-    |> recur(days)
+    |> simulate(days)
     |> Map.values()
     |> Enum.sum()
   end
 
-  defp recur(fish, 1), do: next_day(fish)
+  defp simulate(fish, 1), do: next_day(fish)
 
-  defp recur(fish, day) do
+  defp simulate(fish, day) do
     fish
     |> next_day()
-    |> recur(day - 1)
+    |> simulate(day - 1)
   end
 
   defp next_day(fish) do
