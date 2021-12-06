@@ -25,24 +25,22 @@ defmodule Y2021.D5 do
   end
 
   defp mark_line([{x1, y}, {x2, y}], grid, _opt) do
-    Enum.reduce(x1..x2, grid, fn x, acc ->
-      Map.update(acc, {x, y}, 1, &(&1 + 1))
-    end)
+    Enum.reduce(x1..x2, grid, &mark_point({&1, y}, &2))
   end
 
   defp mark_line([{x, y1}, {x, y2}], grid, _opt) do
-    Enum.reduce(y1..y2, grid, fn y, acc ->
-      Map.update(acc, {x, y}, 1, &(&1 + 1))
-    end)
+    Enum.reduce(y1..y2, grid, &mark_point({x, &1}, &2))
   end
 
   defp mark_line([{x1, y1}, {x2, y2}], grid, :inc_diagonals) do
     [Enum.map(x1..x2, & &1), Enum.map(y1..y2, & &1)]
     |> Enum.zip()
-    |> Enum.reduce(grid, fn point, acc -> Map.update(acc, point, 1, &(&1 + 1)) end)
+    |> Enum.reduce(grid, &mark_point/2)
   end
 
   defp mark_line(_points, grid, _opt), do: grid
+
+  defp mark_point(point, grid), do: Map.update(grid, point, 1, &(&1 + 1))
 
   defp parse_line(line) do
     %{"x1" => x1, "x2" => x2, "y1" => y1, "y2" => y2} =
