@@ -12,24 +12,24 @@ defmodule Y2021.D6 do
 
   defp live_day(fish, 1) do
     fish
-    |> evolve()
+    |> next_day()
     |> Map.values()
     |> Enum.sum()
   end
 
   defp live_day(fish, day) do
     fish
-    |> evolve()
+    |> next_day()
     |> live_day(day - 1)
   end
 
-  defp evolve(fish) do
-    {fish_to_create, fish} = Map.pop(fish, 0, 0)
+  defp next_day(fish) do
+    {spawn_count, fish} = Map.pop(fish, 0, 0)
 
     fish
-    |> Enum.into(%{}, fn {days_until_reset, count} -> {days_until_reset - 1, count} end)
-    |> Map.put(8, fish_to_create)
-    |> Map.update(6, fish_to_create, &(&1 + fish_to_create))
+    |> Enum.into(%{}, fn {days_to_spawn, count} -> {days_to_spawn - 1, count} end)
+    |> Map.put(8, spawn_count)
+    |> Map.update(6, spawn_count, &(&1 + spawn_count))
   end
 
   def p2, do: p2(input_string())
