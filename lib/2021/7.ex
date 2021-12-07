@@ -33,8 +33,7 @@ defmodule Y2021.D7 do
 
     0..max
     |> Enum.map(&calculate_real_fuel_cost(&1, crab_positions))
-    |> Enum.sort()
-    |> hd()
+    |> Enum.min()
     |> floor()
   end
 
