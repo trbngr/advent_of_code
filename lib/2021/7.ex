@@ -8,15 +8,15 @@ defmodule Y2021.D7 do
       |> String.split(",", trim: true)
       |> Enum.map(&String.to_integer/1)
 
-    {positions, Enum.max(positions)}
+    {positions, Enum.min_max(positions)}
   end
 
   def p1, do: p1(input_string())
 
   def p1(input) do
-    {crab_positions, max} = crab_positions(input)
+    {crab_positions, {min, max}} = crab_positions(input)
 
-    0..max
+    min..max
     |> Enum.map(&calculate_fuel_cost(&1, crab_positions))
     |> Enum.sort()
     |> hd()
@@ -29,9 +29,9 @@ defmodule Y2021.D7 do
   def p2, do: p2(input_string())
 
   def p2(input) do
-    {crab_positions, max} = crab_positions(input)
+    {crab_positions, {min, max}} = crab_positions(input)
 
-    0..max
+    min..max
     |> Enum.map(&calculate_real_fuel_cost(&1, crab_positions))
     |> Enum.min()
     |> floor()
